@@ -141,6 +141,12 @@ var uploadedThisSession=[];
 // ═══════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,function(character){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character];
+  });
+}
+
 function myr(v,compact){
   var val=v||0;
   if(compact&&Math.abs(val)>=1000) return 'RM '+(Math.abs(val)/1000).toFixed(1)+'k';
@@ -470,7 +476,7 @@ function pgPL(){
       '<div class="card"><div class="card-title">修改商品成本（MYR/件）</div>'+
       '<div style="font-size:12px;color:var(--muted);margin-bottom:10px;">每行：SKU代码,成本金额</div>'+
       '<textarea id="cogsInput" rows="8" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--ink);font-size:12px;font-family:monospace;resize:vertical;">'+
-      Object.entries(COGS).map(function(e){return e[0]+','+e[1];}).join('\n')+
+      Object.entries(COGS).map(function(e){return escapeHTML(e[0])+','+escapeHTML(e[1]);}).join('\n')+
       '</textarea>'+
       '<button class="btn-primary" style="margin-top:8px;" onclick="saveCogs()">✓ 保存成本，立即更新</button></div>'+
     '</div>'+
@@ -778,7 +784,7 @@ function handleFiles(files){
   var html=pendingFiles.map(function(f){
     return '<div class="file-item">'+
       '<span style="font-size:18px;">📄</span>'+
-      '<div style="flex:1"><div style="font-weight:600;">'+f.name+'</div>'+
+      '<div style="flex:1"><div style="font-weight:600;">'+escapeHTML(f.name)+'</div>'+
       '<div style="font-size:11px;color:var(--muted);">'+(f.size/1024).toFixed(1)+' KB</div></div>'+
       '<span style="color:#10b981;">✓</span></div>';
   }).join('');
@@ -800,7 +806,7 @@ function doUpload(){
     document.getElementById('uploadResult').innerHTML=
       '<div style="padding:14px;background:#10b98118;border:1px solid #10b98144;border-radius:8px;font-size:13px;color:#10b981;">'+
       '✓ 上传成功！<br>'+
-      '<span style="color:var(--muted);">平台：'+p.flag+' '+p.name+' · 类型：'+typeLabel+' · 月份：'+mKey+'<br>'+
+      '<span style="color:var(--muted);">平台：'+escapeHTML(p.flag)+' '+escapeHTML(p.name)+' · 类型：'+escapeHTML(typeLabel)+' · 月份：'+escapeHTML(mKey)+'<br>'+
       '文件数：'+pendingFiles.length+'份 · 数据已合并到报表系统</span></div>';
     document.getElementById('doUploadBtn').disabled=false;
     uploadedThisSession.push({plat:selectedPlat,type:selectedType,month:mKey,files:pendingFiles.map(function(f){return f.name;})});
