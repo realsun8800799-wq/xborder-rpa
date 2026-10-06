@@ -685,7 +685,7 @@ function pgAdmin(){
     '<div style="font-size:12px;color:var(--muted);margin-bottom:20px;">管理团队成员账号和店铺权限</div>'+
 
     '<div style="display:flex;gap:10px;margin-bottom:16px;">'+
-      '<button onclick="alert(\'新增用户\\n\\n部署后在 Supabase Dashboard → Authentication → Users 新增用户\\n然后在数据库 user_profiles 表设置权限和店铺')" '+
+      '<button onclick="alert(\'新增用户\\n\\n部署后在 Supabase Dashboard → Authentication → Users 新增用户\\n然后在数据库 user_profiles 表设置权限和店铺\')" '+
       'style="padding:9px 18px;border-radius:8px;border:none;background:var(--green);color:#000;font-weight:700;font-family:inherit;cursor:pointer;font-size:13px;">+ 新增用户</button>'+
       '<div style="padding:9px 14px;border-radius:8px;background:var(--raised);border:1px solid var(--border);font-size:12px;color:var(--muted);">共 '+USERS.length+' 个账号 · '+USERS.filter(function(u){return u.role==='ops';}).length+' 个运营</div>'+
     '</div>'+
